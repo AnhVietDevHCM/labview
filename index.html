@@ -2,19 +2,19 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Phòng Thí Nghiệm Vật Lí Ảo</title>
+  <title>Phòng Thí Nghiệm Vật Lí Ảo</title> 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root {
+    :root { /* biến CSS chung */
       --bg-gradient: linear-gradient(135deg, #0a0f14, #161b22);
-      --accent-color: #00f7ff; /* Cyber Cyan */
-      --accent-color-dark: #f700ff; /* Magenta Glow */
+      --accent-color: #00f7ff; /* màu Cyan */
+      --accent-color-dark: #f700ff; /* màu Magenta Glow */
       --accent-glow: rgba(0, 247, 255, 0.25);
       --accent-glow-dark: rgba(247, 0, 255, 0.2);
       --card-bg: rgba(18, 24, 33, 0.5);
-      --text-color: #f1f1f1;
+      --text-color: #f1f1f1; 
       --text-color-bright: #ffffff;
       --text-color-muted: #a0a8b3;
       --border-color: rgba(139, 148, 158, 0.25);
@@ -24,7 +24,7 @@
       --border-radius-main: 16px;
     }
 
-    body {
+    body { /* kiểu chung cho phần body */
       position: relative;
       background: var(--bg-gradient);
       color: var(--text-color);
@@ -41,7 +41,7 @@
       font-weight: 600;
       animation: text-glow 2s ease-in-out infinite alternate;
     }
-    /* Aurora background effect */
+    /* hiệu ứng nền Aurora */
     body::before {
         content: '';
         position: fixed;
@@ -52,7 +52,7 @@
         z-index: -2;
         animation: aurora-move 20s linear infinite;
     }
-    /* Scanline effect */
+    /* hiệu ứng Scanline */
     body::after {
         content: '';
         position: fixed;
@@ -72,7 +72,7 @@
         100% { transform: translate(0, 0); }
     }
 
-    /* Theme classes */
+    /* kiểu classes */
     body.theme-deep-space { --bg-gradient: linear-gradient(135deg, #1D2B64, #000000); }
     body.theme-nebula { --bg-gradient: linear-gradient(135deg, #23074d, #cc5333); }
     body.theme-sunset { --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
@@ -123,7 +123,7 @@
     .card::before {
       content: '';
       position: absolute; inset: 0; border-radius: var(--border-radius-main);
-      padding: 1px; /* border width */
+      padding: 1px; /* chiều rộng border */
       background: linear-gradient(135deg, var(--accent-color), var(--accent-color-dark));
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
@@ -228,39 +228,20 @@
       outline: 2px solid var(--accent-color);
       outline-offset: 2px;
     }
-    input[type="range"] {
-      -webkit-appearance: none;
-      width: 120px;
-      height: 8px;
-      background: #2a2f3b;
-      border-radius: 5px;
-      outline: none;
+    input[type="number"] {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--control-bg);
+      color: var(--text-color);
+      font-family: 'Poppins', sans-serif;
+      width: 100px;
+      text-align: center;
       margin: 0 10px;
-      background-image: linear-gradient(var(--accent-color), var(--accent-color));
-      background-size: 0% 100%;
-      background-repeat: no-repeat;
     }
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 18px;
-      height: 18px;
-      background: var(--accent-color);
-      cursor: pointer;
-      border-radius: 50%;
-      border: 2px solid var(--control-bg);
-      box-shadow: 0 0 12px var(--accent-glow);
-      transition: background-color .2s, transform .2s, box-shadow .2s;
-    }
-    input[type="range"]::-webkit-slider-thumb:hover {
-        transform: scale(1.1);
-        box-shadow: 0 0 25px var(--accent-glow);
-    }
-    input[type="range"]::-moz-range-thumb { /* Firefox */
-        width: 18px; height: 18px; background: var(--accent-color); cursor: pointer; border-radius: 50%; border: none;
-    }
-    input[type="range"]::-moz-range-track { /* Firefox */
-        height: 8px; background: var(--slider-track); border-radius: 5px;
+    input[type="number"]:focus {
+      outline: 2px solid var(--accent-color);
+      border-color: var(--accent-color);
     }
     .formula {
       margin: 15px 0;
@@ -372,6 +353,8 @@
       backdrop-filter: blur(5px);
     }
 
+    /* Animation for sidebar */ 
+    
     /* Responsive */
     @media (max-width: 768px) {
         .sidebar {
@@ -536,13 +519,19 @@
             m: 1, // kg
             c: 4200, // Nhiệt dung riêng (J/kg.K) - giá trị này không được dùng trực tiếp, thay vào đó là c_water, c_ice
             c_water: 4200, // Nhiệt dung riêng của nước
-            c_ice: 2100,   // Nhiệt dung riêng của đá
+            c_ice: 2100,   // Nhiệt dung riêng của đá (không dùng trực tiếp)
             Lf: 334000,  // Ẩn nhiệt nóng chảy (J/kg)
-            Lv: 2260000, // Ẩn nhiệt hóa hơi (J/kg)
+            // Lv: 2260000, // Ẩn nhiệt hóa hơi (J/kg) - removed để giữ đúng biểu diễn tan chảy, không sôi
             T0: 25, // Nhiệt độ ban đầu (°C)
             T: 25, // Nhiệt độ hiện tại (°C)
             heating: false, // Trạng thái đang đun nóng hay không
-            state: 'LIQUID', // Trạng thái vật chất: SOLID, LIQUID, GAS, MELTING, BOILING
+            radiate: false, // Có tỏa nhiệt ra môi trường hay không
+            autoCool: false, // Có bật quạt làm mát
+            fanPower: 0, // Công suất quạt làm mát (W)
+            T_env: 20, // Nhiệt độ môi trường (°C)
+            hasIce: false, // Có cục đá hay không
+            power: 500, // Công suất đun nóng (W)
+            state: 'LIQUID', // Trạng thái vật chất: SOLID, LIQUID, MELTING
             lastUpdate: 0, // Mốc thời gian để tính delta time
             m_container: 0.5, // Khối lượng bình chứa (kg)
             c_container: 900,  // J/kg.K (Nhôm)
@@ -574,12 +563,14 @@
         function initMolecules() {
             idealGas.molecules = [];
             let count = Math.min(Math.round(idealGas.n * 50), 100);
+            let maxVolumeDisplay = 0.1;
+            let volumeHeight = (idealGas.V / maxVolumeDisplay) * idealGas.box.h;
             for (let i = 0; i < count; i++) {
                 idealGas.molecules.push({
                     x: idealGas.box.x + 10 + Math.random() * (idealGas.box.w - 20),
-                    y: idealGas.box.y + 10 + Math.random() * (idealGas.box.h - 20),
-                    vx: (idealGas.T > 0 ? (Math.random() - 0.5) * Math.sqrt(idealGas.T) * 0.1 : 0),
-                    vy: (idealGas.T > 0 ? (Math.random() - 0.5) * Math.sqrt(idealGas.T) * 0.1 : 0)
+                    y: idealGas.box.y + 10 + Math.random() * Math.max(1, volumeHeight - 20),
+                    vx: (idealGas.T == 0 ? 0 : (Math.random() - 0.5) * Math.sqrt(idealGas.T) * 0.1),
+                    vy: (idealGas.T == 0 ? 0 : (Math.random() - 0.5) * Math.sqrt(idealGas.T) * 0.1)
                 });
             }
         }
@@ -715,8 +706,9 @@
             ctx.lineWidth = 3;
             ctx.strokeRect(idealGas.box.x, idealGas.box.y, idealGas.box.w, idealGas.box.h);
             // Vẽ piston. 0.1 là giá trị max của slider V, tương ứng với chiều cao tối đa của hộp.
-            let maxVolumeDisplay = 0.1; 
-            let pistonY = idealGas.box.y + idealGas.box.h - (idealGas.V / 0.1 * idealGas.box.h);
+            let maxVolumeDisplay = 0.1;
+            let volumeHeight = (idealGas.V / maxVolumeDisplay) * idealGas.box.h;
+            let pistonY = idealGas.box.y + volumeHeight;
             ctx.fillStyle = "#aaa";
             ctx.fillRect(idealGas.box.x, pistonY, idealGas.box.w, 10);
             
@@ -732,19 +724,17 @@
         function updateIdealGas() {
             if (isPaused) return;
             let maxVolumeDisplay = 0.1;
-            let pistonY = idealGas.box.y + idealGas.box.h - (idealGas.V / maxVolumeDisplay * idealGas.box.h); // Vị trí của piston
-            if (idealGas.T <= 0) { // Dừng chuyển động và cho rơi xuống đáy khi T=0K
+            let volumeHeight = (idealGas.V / maxVolumeDisplay) * idealGas.box.h;
+            let pistonY = idealGas.box.y + volumeHeight; // Vị trí của piston, V tăng -> piston xuống dưới -> thể tích lớn
+            if (idealGas.T == 0) { // Dừng chuyển động hoàn toàn khi T=0K (điểm không tuyệt đối)
                 idealGas.molecules.forEach(mol => {
-                    const bottomY = idealGas.box.y + idealGas.box.h - 5;
-                    if (mol.y < bottomY) {
-                        mol.y += 1; // Mô phỏng trọng lực
-                        if (mol.y > bottomY) mol.y = bottomY; // Đảm bảo không lún qua đáy
-                    }
-                    mol.vx = 0; mol.vy = 0;
+                    mol.vx = 0; mol.vy = 0; // Vận tốc phân tử về 0, các phân tử dừng chuyển động
+                    // Không cho rơi xuống đáy, giữ vị trí hiện tại để dừng chuyển động
                 });
                 return;
             }
 
+            idealGas.P = (idealGas.n * idealGas.R * idealGas.T) / idealGas.V;
             idealGas.molecules.forEach(mol => {
                 mol.x += mol.vx * speed;
                 mol.y += mol.vy * speed;
@@ -761,9 +751,9 @@
                     mol.y = idealGas.box.y + 5; // Ngăn không cho dính vào tường
                     mol.vy *= -1;
                 }
-                // Va chạm với piston (ranh giới dưới của khí)
-                if (mol.y > pistonY - 5) { // Nếu tâm phân tử vượt quá bề mặt piston (trừ bán kính)
-                    mol.y = pistonY - 5; // Đặt lại vị trí ngay trên bề mặt piston
+                // Va chạm với piston (ranh giới dưới của khí): gas nằm giữa box.y (trên) và pistonY (dưới)
+                if (mol.y > pistonY - 5) {
+                    mol.y = pistonY - 5;
                     mol.vy *= -1;
                 }
 
@@ -805,6 +795,24 @@
                 ctx.fillRect(280, 250, 140, 100);
             }
             ctx.restore(); // Bỏ giới hạn clip
+
+            // Vẽ cục đá nếu có
+            if (thermo.hasIce) {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(350, 320, 20, 0, 2 * Math.PI); // Cục đá hình tròn
+                ctx.fillStyle = "rgba(173, 216, 230, 0.9)";
+                ctx.fill();
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                // Vẽ đường nứt
+                ctx.beginPath();
+                ctx.moveTo(340, 310); ctx.lineTo(360, 330);
+                ctx.moveTo(360, 310); ctx.lineTo(340, 330);
+                ctx.stroke();
+                ctx.restore();
+            }
 
             // Vẽ lại đường viền bình
             ctx.beginPath();
@@ -854,9 +862,13 @@
 
             let energyChange = 0;
             if (thermo.heating) { // Nhận nhiệt
-                energyChange = 500 * dt * speed; // 500W, ảnh hưởng bởi speed
-            } else { // Tỏa nhiệt ra môi trường (Định luật Newton về sự nguội đi)
-                energyChange = -thermo.m * 40 * (thermo.T - 20) * dt * speed; // 20 là nhiệt độ môi trường
+                energyChange = thermo.power * dt * speed; // Sử dụng công suất có thể điều chỉnh
+            }
+            if (thermo.radiate) { // Tỏa nhiệt ra môi trường (Định luật Newton về sự nguội đi)
+                energyChange += -thermo.m * 5 * (thermo.T - thermo.T_env) * dt * speed;
+            }
+            if (thermo.autoCool) { // Quạt làm mát tạo nhiệt mất cố định
+                energyChange += -thermo.fanPower * dt * speed;
             }
             thermo.Q += energyChange;
 
@@ -870,6 +882,7 @@
                 }
                 case 'MELTING': {
                     // Nhiệt độ không đổi, chỉ có nhiệt lượng thay đổi
+                    thermo.Q += energyChange;
                     if (thermo.Q > thermo.m * thermo.Lf) {
                         thermo.Q = thermo.Q - thermo.m * thermo.Lf;
                         thermo.state = 'LIQUID';
@@ -882,29 +895,16 @@
                 case 'LIQUID': {
                     const totalHeatCapacity = (thermo.m * thermo.c_water) + (thermo.m_container * thermo.c_container);
                     thermo.T += energyChange / totalHeatCapacity;
-                    if (thermo.T >= 100) {
-                        thermo.Q = (thermo.T - 100) * thermo.m * thermo.c_water;
-                        thermo.T = 100;
-                        thermo.state = 'BOILING';
-                    } else if (thermo.T < 0) {
-                        thermo.Q = thermo.T * thermo.m * thermo.c_water;
+                    if (thermo.T < 0) {
                         thermo.T = 0;
                         thermo.state = 'MELTING';
+                    } else if (thermo.T > 100) {
+                        // Giữ nhiệt độ ở 100°C trong mô phỏng này để tránh xử lý hơi nước phức tạp
+                        thermo.T = 100;
                     }
+                    thermo.hasIce = false; // Khi ở trạng thái lỏng, không còn đá
                     break;
                 }
-                case 'BOILING': {
-                     if (thermo.Q > thermo.m * thermo.Lv) {
-                        thermo.state = 'GAS'; // Toàn bộ đã hóa hơi
-                    } else if (thermo.Q < 0) {
-                        thermo.Q = 0;
-                        thermo.state = 'LIQUID';
-                    }
-                    break;
-                }
-                case 'GAS':
-                    // Có thể thêm logic cho hơi nước siêu nhiệt ở đây
-                    break;
             }
         }
 
@@ -1076,6 +1076,7 @@
                 `;
             } else if (experiment === 'ideal_gas') {
                 let v_avg = idealGas.T > 0 ? Math.sqrt(3 * idealGas.R * idealGas.T / (idealGas.M)) : 0;
+                let note = idealGas.T == 0 ? '<br><em>Lưu ý: Tại 0 K (điểm không tuyệt đối), các phân tử dừng hẳn chuyển động.</em>' : '';
                 html = `
                     <b>Khí lý tưởng:</b><br>
                     Áp suất (P): ${(idealGas.P / 1000).toFixed(2)} kPa<br>
@@ -1083,25 +1084,27 @@
                     Số mol (n): ${idealGas.n}<br>
                     Nhiệt độ (T): ${idealGas.T} K<br>
                     Số phân tử (mô phỏng): ${idealGas.molecules.length}<br>
-                    Vận tốc trung bình phân tử: ${v_avg.toFixed(2)} m/s
+                    Vận tốc trung bình phân tử: ${v_avg.toFixed(2)} m/s${note}
                 `;
             } else if (experiment === 'thermo') {
                 let stateText = "Lỏng";
                 if (thermo.state === 'SOLID') stateText = "Rắn (Nước đá)";
                 else if (thermo.state === 'MELTING') stateText = `Nóng chảy (tại 0°C)`;
-                else if (thermo.state === 'BOILING') stateText = `Sôi (tại 100°C)`;
-                else if (thermo.state === 'GAS') stateText = "Khí (Hơi nước)";
 
                 html = `
                     <b>Nhiệt động lực học:</b><br>
                     Nhiệt lượng trao đổi (Q): ${thermo.Q.toFixed(0)} J<br>
                     Nhiệt độ hiện tại (T): ${thermo.T.toFixed(2)} °C<br>
                     Trạng thái: <strong>${stateText}</strong><br>
+                    Công suất đun nóng: ${thermo.power} W<br>
+                    Quạt làm mát: ${thermo.autoCool ? 'Bật' : 'Tắt'} (Công suất ${thermo.fanPower} W)<br>
+                    Tỏa nhiệt: ${thermo.radiate ? 'Có' : 'Không'} (T_env=${thermo.T_env} °C)<br>
                     ---<br>
                     Khối lượng vật (m): ${thermo.m} kg<br>
                     Khối lượng bình (m_b): ${thermo.m_container} kg<br>
                     Nhiệt dung riêng bình (c_b): ${thermo.c_container} J/kg.K<br>
-                    Nhiệt dung riêng nước (c_n): ${thermo.c_water} J/kg.K
+                    Nhiệt dung riêng nước (c_n): ${thermo.c_water} J/kg.K<br>
+                    Nhiệt nóng chảy (Lf): ${thermo.Lf} J/kg
                 `;
             } else if (experiment === 'spring_horizontal') {
                 let omega = Math.sqrt(spring_horizontal.k / spring_horizontal.mass);
@@ -1158,54 +1161,105 @@
             let html = '';
             if (experiment === 'pendulum') {
                 html = ` 
-                    <div class="param-item"><span class="slider-label">Góc ban đầu (°):</span><input type="range" id="angle" min="5" max="80" value="30" oninput="document.getElementById('angle_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="angle_val">30</span></div>
-                    <div class="param-item"><span class="slider-label">Độ dài (m):</span><input type="range" id="length" min="0.2" max="2" step="0.01" value="1" oninput="document.getElementById('length_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="length_val">1</span></div>
-                    <div class="param-item"><span class="slider-label">Lực cản:</span><input type="range" id="damping" min="0" max="0.5" step="0.01" value="0.1" oninput="document.getElementById('damping_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="damping_val">0.1</span></div>
-                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="range" id="mass" min="0.05" max="2" step="0.01" value="0.2" oninput="document.getElementById('mass_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="mass_val">0.2</span></div>
+                    <div class="param-item"><span class="slider-label">Góc ban đầu (°):</span><input type="number" id="angle" min="5" max="80" step="0.1" value="30" onchange="document.getElementById('angle_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="angle_val">30</span></div>
+                    <div class="param-item"><span class="slider-label">Độ dài (m):</span><input type="number" id="length" min="0.2" max="2" step="0.01" value="1" onchange="document.getElementById('length_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="length_val">1</span></div>
+                    <div class="param-item"><span class="slider-label">Lực cản:</span><input type="number" id="damping" min="0" max="0.5" step="0.01" value="0.1" onchange="document.getElementById('damping_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="damping_val">0.1</span></div>
+                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="number" id="mass" min="0.05" max="2" step="0.01" value="0.2" onchange="document.getElementById('mass_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="mass_val">0.2</span></div>
                 `;
             } else if (experiment === 'spring') {
                 html = `
-                    <div class="param-item"><span class="slider-label">Độ cứng k (N/m):</span><input type="range" id="k" min="5" max="50" step="1" value="20" oninput="document.getElementById('k_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="k_val">20</span></div>
-                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="range" id="mass" min="0.1" max="2" step="0.01" value="0.5" oninput="document.getElementById('mass_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="mass_val">0.5</span></div>
-                    <div class="param-item"><span class="slider-label">Biên độ (m):</span><input type="range" id="amplitude" min="0.05" max="0.5" step="0.01" value="0.2" oninput="document.getElementById('amplitude_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="amplitude_val">0.2</span></div>
-                    <div class="param-item"><span class="slider-label">Lực cản:</span><input type="range" id="damping" min="0" max="1" step="0.01" value="0.2" oninput="document.getElementById('damping_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="damping_val">0.2</span></div>
+                    <div class="param-item"><span class="slider-label">Độ cứng k (N/m):</span><input type="number" id="k" min="5" max="50" step="1" value="20" onchange="resetExperiment()"><span class="slider-value" id="k_val">20</span></div>
+                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="number" id="mass" min="0.1" max="2" step="0.01" value="0.5" onchange="resetExperiment()"><span class="slider-value" id="mass_val">0.5</span></div>
+                    <div class="param-item"><span class="slider-label">Biên độ (m):</span><input type="number" id="amplitude" min="0.05" max="0.5" step="0.01" value="0.2" onchange="resetExperiment()"><span class="slider-value" id="amplitude_val">0.2</span></div>
+                    <div class="param-item"><span class="slider-label">Lực cản:</span><input type="number" id="damping" min="0" max="1" step="0.01" value="0.2" onchange="resetExperiment()"><span class="slider-value" id="damping_val">0.2</span></div>
                 `;
             } else if (experiment === 'projectile') {
                 html = `
-                    <div class="param-item"><span class="slider-label">Vận tốc ném ngang (m/s):</span><input type="range" id="vx" min="2" max="20" step="0.1" value="10" oninput="document.getElementById('vx_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="vx_val">10</span></div>
-                    <div class="param-item"><span class="slider-label">Độ cao ban đầu (m):</span><input type="range" id="y" min="1" max="10" step="0.1" value="4" oninput="document.getElementById('y_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="y_val">4</span></div>
-                    <div class="param-item"><span class="slider-label">Lực cản:</span><input type="range" id="damping" min="0" max="0.1" step="0.001" value="0.01" oninput="document.getElementById('damping_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="damping_val">0.01</span></div>
-                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="range" id="mass" min="0.05" max="1" step="0.01" value="0.1" oninput="document.getElementById('mass_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="mass_val">0.1</span></div>
+                    <div class="param-item"><span class="slider-label">Vận tốc ném ngang (m/s):</span><input type="number" id="vx" min="2" max="20" step="0.1" value="10" onchange="document.getElementById('vx_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="vx_val">10</span></div>
+                    <div class="param-item"><span class="slider-label">Độ cao ban đầu (m):</span><input type="number" id="y" min="1" max="10" step="0.1" value="4" onchange="document.getElementById('y_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="y_val">4</span></div>
+                    <div class="param-item"><span class="slider-label">Lực cản:</span><input type="number" id="damping" min="0" max="0.1" step="0.001" value="0.01" onchange="document.getElementById('damping_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="damping_val">0.01</span></div>
+                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="number" id="mass" min="0.05" max="1" step="0.01" value="0.1" onchange="document.getElementById('mass_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="mass_val">0.1</span></div>
                 `;
             } else if (experiment === 'ideal_gas') {
                 html = `
-                    <div class="param-item"><span class="slider-label">Thể tích (m³):</span><input type="range" id="V" min="0.01" max="0.1" step="0.001" value="0.0224" oninput="idealGas.V=parseFloat(this.value); idealGas.P=(idealGas.n*idealGas.R*idealGas.T)/idealGas.V; document.getElementById('V_val').innerText=this.value;"><span class="slider-value" id="V_val">0.0224</span></div>
-                    <div class="param-item"><span class="slider-label">Số mol (mol):</span><input type="range" id="n" min="0.5" max="5" step="0.1" value="1" oninput="document.getElementById('n_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="n_val">1</span></div>
-                    <div class="param-item"><span class="slider-label">Nhiệt độ (K):</span><input type="range" id="T" min="0" max="600" step="1" value="273" oninput="document.getElementById('T_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="T_val">273</span></div>
+                    <div class="param-item"><span class="slider-label">Thể tích (m³):</span><input type="number" id="V" min="0.01" max="0.1" step="0.001" value="0.0224" onchange="document.getElementById('V_val').innerText=this.value; idealGas.V=parseFloat(this.value); idealGas.P=(idealGas.n*idealGas.R*idealGas.T)/idealGas.V;"><span class="slider-value" id="V_val">0.0224</span></div>
+                    <div class="param-item"><span class="slider-label">Số mol (mol):</span><input type="number" id="n" min="0.5" max="5" step="0.1" value="1" onchange="document.getElementById('n_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="n_val">1</span></div>
+                    <div class="param-item"><span class="slider-label">Nhiệt độ (K):</span><input type="number" id="T" min="0" max="600" step="1" value="273" onchange="document.getElementById('T_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="T_val">273</span></div>
                 `;
             } else if (experiment === 'thermo') {
                 html = `
-                    <div class="param-item"><span class="slider-label">Khối lượng vật (kg):</span><input type="range" id="m" min="0.1" max="5" step="0.1" value="1" oninput="document.getElementById('m_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="m_val">1</span></div>
-                    <div class="param-item"><span class="slider-label">Khối lượng bình (kg):</span><input type="range" id="m_container" min="0.1" max="2" step="0.1" value="0.5" oninput="document.getElementById('m_container_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="m_container_val">0.5</span></div>
-                    <div class="param-item"><span class="slider-label">Nhiệt độ ban đầu (°C):</span><input type="range" id="T0" min="-50" max="50" step="1" value="25" oninput="document.getElementById('T0_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="T0_val">25</span></div>
-                    <div class="param-item"><span class="slider-label">Nhiệt dung riêng bình (J/kg.K):</span><input type="range" id="c_container" min="300" max="1000" step="10" value="900" oninput="document.getElementById('c_container_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="c_container_val">900</span></div>
+                    <div class="param-item"><span class="slider-label">Khối lượng vật (kg):</span><input type="number" id="m" min="0.1" max="5" step="0.1" value="1" onchange="document.getElementById('m_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="m_val">1</span></div>
+                    <div class="param-item"><span class="slider-label">Khối lượng bình (kg):</span><input type="number" id="m_container" min="0.1" max="2" step="0.1" value="0.5" onchange="document.getElementById('m_container_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="m_container_val">0.5</span></div>
+                    <div class="param-item"><span class="slider-label">Nhiệt độ ban đầu (°C):</span><input type="number" id="T0" min="-50" max="50" step="1" value="25" onchange="document.getElementById('T0_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="T0_val">25</span></div>
+                    <div class="param-item"><span class="slider-label">Nhiệt độ môi trường (°C):</span><input type="number" id="T_env" min="-20" max="50" step="1" value="20" onchange="document.getElementById('T_env_val').innerText=this.value; thermo.T_env=parseFloat(this.value);"><span class="slider-value" id="T_env_val">20</span></div>
+                    <div class="param-item"><span class="slider-label">Nhiệt dung riêng bình (J/kg.K):</span><input type="number" id="c_container" min="0" max="1000" step="10" value="900" onchange="document.getElementById('c_container_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="c_container_val">900</span></div>
+                    <div class="param-item"><span class="slider-label">Nhiệt dung riêng nước (J/kg.K):</span><input type="number" id="c_water" min="1000" max="10000" step="100" value="4200" onchange="document.getElementById('c_water_val').innerText=this.value; thermo.c_water=parseFloat(this.value); resetExperiment()"><span class="slider-value" id="c_water_val">4200</span></div>
+                    <div class="param-item"><span class="slider-label">Nhiệt nóng chảy (J/kg):</span><input type="number" id="Lf" min="100000" max="500000" step="10000" value="334000" onchange="document.getElementById('Lf_val').innerText=this.value; thermo.Lf=parseFloat(this.value); resetExperiment()"><span class="slider-value" id="Lf_val">334000</span></div>
+                    <div class="param-item"><span class="slider-label">Công suất đun nóng (W):</span><input type="number" id="power" min="0" max="1000" step="10" value="500" onchange="document.getElementById('power_val').innerText=this.value; thermo.power=parseFloat(this.value);"><span class="slider-value" id="power_val">500</span></div>
+                    <div class="param-item"><span class="slider-label">Công suất quạt làm mát (W):</span><input type="number" id="fanPower" min="0" max="500" step="10" value="0" onchange="document.getElementById('fanPower_val').innerText=this.value; thermo.fanPower=parseFloat(this.value);"><span class="slider-value" id="fanPower_val">0</span></div>
+                    <div class="param-item"><label><input type="checkbox" id="radiate" onchange="thermo.radiate = this.checked;"> Tỏa nhiệt ra môi trường</label></div>
+                    <div class="param-item"><label><input type="checkbox" id="autoCool" onchange="thermo.autoCool = this.checked;"> Quạt làm mát tự động</label></div>
+                    <div class="param-item" style="justify-content: center;"><button onclick="addIce()">Thêm đá</button><button onclick="removeIce()">Bỏ đá</button></div>
                 `;
             } else if (experiment === 'spring_horizontal') {
                 html = `
-                    <div class="param-item"><span class="slider-label">Độ cứng k (N/m):</span><input type="range" id="k" min="5" max="50" step="1" value="20" oninput="document.getElementById('k_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="k_val">20</span></div>
-                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="range" id="mass" min="0.1" max="2" step="0.01" value="0.5" oninput="document.getElementById('mass_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="mass_val">0.5</span></div>
-                    <div class="param-item"><span class="slider-label">Biên độ (m):</span><input type="range" id="amplitude" min="0.05" max="0.5" step="0.01" value="0.2" oninput="document.getElementById('amplitude_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="amplitude_val">0.2</span></div>
-                    <div class="param-item"><span class="slider-label">Lực cản:</span><input type="range" id="damping" min="0" max="1" step="0.01" value="0.2" oninput="document.getElementById('damping_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="damping_val">0.2</span></div>
+                    <div class="param-item"><span class="slider-label">Độ cứng k (N/m):</span><input type="number" id="k" min="5" max="50" step="1" value="20" onchange="resetExperiment()"><span class="slider-value" id="k_val">20</span></div>
+                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="number" id="mass" min="0.1" max="2" step="0.01" value="0.5" onchange="resetExperiment()"><span class="slider-value" id="mass_val">0.5</span></div>
+                    <div class="param-item"><span class="slider-label">Biên độ (m):</span><input type="number" id="amplitude" min="0.05" max="0.5" step="0.01" value="0.2" onchange="resetExperiment()"><span class="slider-value" id="amplitude_val">0.2</span></div>
+                    <div class="param-item"><span class="slider-label">Lực cản:</span><input type="number" id="damping" min="0" max="1" step="0.01" value="0.2" onchange="resetExperiment()"><span class="slider-value" id="damping_val">0.2</span></div>
                 `;
             } else if (experiment === 'inclined_plane') {
                 html = `
-                    <div class="param-item"><span class="slider-label">Góc nghiêng (°):</span><input type="range" id="angle" min="5" max="60" value="30" oninput="document.getElementById('angle_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="angle_val">30</span></div>
-                    <div class="param-item"><span class="slider-label">Hệ số ma sát:</span><input type="range" id="friction" min="0" max="0.6" step="0.01" value="0.1" oninput="document.getElementById('friction_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="friction_val">0.1</span></div>
-                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="range" id="mass" min="0.1" max="5" step="0.1" value="1" oninput="document.getElementById('mass_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="mass_val">1</span></div>
-                    <div class="param-item"><span class="slider-label">Lực kéo (N):</span><input type="range" id="F_pull" min="0" max="50" step="0.1" value="0" oninput="document.getElementById('F_pull_val').innerText=this.value; resetExperiment()"><span class="slider-value" id="F_pull_val">0</span></div>
+                    <div class="param-item"><span class="slider-label">Góc nghiêng (°):</span><input type="number" id="angle" min="5" max="60" value="30" onchange="resetExperiment()"><span class="slider-value" id="angle_val">30</span></div>
+                    <div class="param-item"><span class="slider-label">Hệ số ma sát:</span><input type="number" id="friction" min="0" max="0.6" step="0.01" value="0.1" onchange="resetExperiment()"><span class="slider-value" id="friction_val">0.1</span></div>
+                    <div class="param-item"><span class="slider-label">Khối lượng (kg):</span><input type="number" id="mass" min="0.1" max="5" step="0.1" value="1" onchange="resetExperiment()"><span class="slider-value" id="mass_val">1</span></div>
+                    <div class="param-item"><span class="slider-label">Lực kéo (N):</span><input type="number" id="F_pull" min="0" max="50" step="0.1" value="0" onchange="resetExperiment()"><span class="slider-value" id="F_pull_val">0</span></div>
                 `;
             }
             document.getElementById('params').innerHTML = html;
+            // Cập nhật giá trị hiển thị cho sliders
+            if (experiment === 'pendulum') {
+                document.getElementById('angle_val').innerText = document.getElementById('angle').value;
+                document.getElementById('length_val').innerText = document.getElementById('length').value;
+                document.getElementById('damping_val').innerText = document.getElementById('damping').value;
+                document.getElementById('mass_val').innerText = document.getElementById('mass').value;
+            } else if (experiment === 'spring') {
+                document.getElementById('k_val').innerText = document.getElementById('k').value;
+                document.getElementById('mass_val').innerText = document.getElementById('mass').value;
+                document.getElementById('amplitude_val').innerText = document.getElementById('amplitude').value;
+                document.getElementById('damping_val').innerText = document.getElementById('damping').value;
+            } else if (experiment === 'projectile') {
+                document.getElementById('vx_val').innerText = document.getElementById('vx').value;
+                document.getElementById('y_val').innerText = document.getElementById('y').value;
+                document.getElementById('damping_val').innerText = document.getElementById('damping').value;
+                document.getElementById('mass_val').innerText = document.getElementById('mass').value;
+            } else if (experiment === 'ideal_gas') {
+                document.getElementById('V_val').innerText = document.getElementById('V').value;
+                document.getElementById('n_val').innerText = document.getElementById('n').value;
+                document.getElementById('T_val').innerText = document.getElementById('T').value;
+            } else if (experiment === 'thermo') {
+                document.getElementById('m_val').innerText = document.getElementById('m').value;
+                document.getElementById('m_container_val').innerText = document.getElementById('m_container').value;
+                document.getElementById('T0_val').innerText = document.getElementById('T0').value;
+                document.getElementById('T_env_val').innerText = document.getElementById('T_env').value;
+                document.getElementById('c_container_val').innerText = document.getElementById('c_container').value;
+                document.getElementById('c_water_val').innerText = document.getElementById('c_water').value;
+                document.getElementById('Lf_val').innerText = document.getElementById('Lf').value;
+                document.getElementById('power_val').innerText = document.getElementById('power').value;
+                document.getElementById('fanPower_val').innerText = document.getElementById('fanPower').value;
+                document.getElementById('radiate').checked = thermo.radiate;
+                document.getElementById('autoCool').checked = thermo.autoCool;
+            } else if (experiment === 'spring_horizontal') {
+                document.getElementById('k_val').innerText = document.getElementById('k').value;
+                document.getElementById('mass_val').innerText = document.getElementById('mass').value;
+                document.getElementById('amplitude_val').innerText = document.getElementById('amplitude').value;
+                document.getElementById('damping_val').innerText = document.getElementById('damping').value;
+            } else if (experiment === 'inclined_plane') {
+                document.getElementById('angle_val').innerText = document.getElementById('angle').value;
+                document.getElementById('friction_val').innerText = document.getElementById('friction').value;
+                document.getElementById('mass_val').innerText = document.getElementById('mass').value;
+                document.getElementById('F_pull_val').innerText = document.getElementById('F_pull').value;
+            }
         }
 
         // --- Đặt lại trạng thái của thí nghiệm về giá trị ban đầu (dựa trên các thanh trượt) ---
@@ -1235,18 +1289,25 @@
             } else if (experiment === 'ideal_gas') {
                 idealGas.V = parseFloat(document.getElementById('V').value) || 0.0224;
                 idealGas.n = parseFloat(document.getElementById('n').value) || 1;
-                idealGas.T = parseFloat(document.getElementById('T').value) || 273;
+                idealGas.T = parseFloat(document.getElementById('T').value);
                 idealGas.P = (idealGas.n * idealGas.R * idealGas.T) / idealGas.V;
                 initMolecules();
             } else if (experiment === 'thermo') {
                 thermo.m = parseFloat(document.getElementById('m').value) || 1;
                 thermo.m_container = parseFloat(document.getElementById('m_container').value) || 0.5;
                 thermo.c_container = parseFloat(document.getElementById('c_container').value) || 900;
+                thermo.c_water = parseFloat(document.getElementById('c_water').value) || 4200;
+                thermo.Lf = parseFloat(document.getElementById('Lf').value) || 334000;
                 thermo.T0 = parseFloat(document.getElementById('T0').value) || 25;
+                thermo.T_env = parseFloat(document.getElementById('T_env').value) || 20;
+                thermo.power = parseFloat(document.getElementById('power').value) || 500;
+                thermo.fanPower = parseFloat(document.getElementById('fanPower').value) || 0;
+                thermo.radiate = document.getElementById('radiate').checked;
+                thermo.autoCool = document.getElementById('autoCool').checked;
                 thermo.T = thermo.T0;
                 thermo.Q = 0;
                 thermo.t = 0;
-                thermo.state = thermo.T < 0 ? 'SOLID' : (thermo.T < 100 ? 'LIQUID' : 'GAS');
+                thermo.state = thermo.T < 0 ? 'SOLID' : 'LIQUID';
                 if (thermo.T === 0) thermo.state = 'MELTING';
             } else if (experiment === 'spring_horizontal') {
                 spring_horizontal.k = parseFloat(document.getElementById('k').value) || 20;
@@ -1275,6 +1336,16 @@
             experiment = document.getElementById('experiment').value;
             setupChartForExperiment(); // Khởi tạo lại biểu đồ cho phù hợp với thí nghiệm mới
             showParams();
+            // Cập nhật checkbox cho thermo
+            if (experiment === 'thermo') {
+                document.getElementById('radiate').checked = thermo.radiate;
+                document.getElementById('power').value = thermo.power;
+                document.getElementById('power_val').innerText = thermo.power;
+                document.getElementById('c_water').value = thermo.c_water;
+                document.getElementById('c_water_val').innerText = thermo.c_water;
+                document.getElementById('Lf').value = thermo.Lf;
+                document.getElementById('Lf_val').innerText = thermo.Lf;
+            }
             // Hiển thị/ẩn nút nhiệt dựa trên thí nghiệm
             const heatBtn = document.getElementById('heatBtn');
             if (heatBtn) heatBtn.style.display = (experiment === 'thermo') ? 'inline-flex' : 'none';
@@ -1319,6 +1390,22 @@
             if (thermo.heating) thermo.lastUpdate = Date.now();
         }
 
+        function addIce() {
+            thermo.hasIce = true;
+            thermo.T = -10;
+            thermo.state = 'SOLID';
+            thermo.Q = 0;
+            resetExperiment();
+        }
+
+        function removeIce() {
+            thermo.hasIce = false;
+            thermo.T = 5;
+            thermo.state = 'LIQUID';
+            thermo.Q = 0;
+            resetExperiment();
+        }
+
         function changeTheme(themeClass) {
             document.body.className = themeClass;
             // Cập nhật class 'active' cho theme dot
@@ -1347,6 +1434,16 @@
             document.querySelectorAll('#params input[type="range"]').forEach(slider => {
                 paramsToSave[slider.id] = slider.value;
             });
+            // Lưu trạng thái checkbox
+            if (experiment === 'thermo') {
+                paramsToSave['radiate'] = thermo.radiate;
+                paramsToSave['autoCool'] = thermo.autoCool;
+                paramsToSave['fanPower'] = thermo.fanPower;
+                paramsToSave['T_env'] = thermo.T_env;
+                paramsToSave['power'] = thermo.power;
+                paramsToSave['c_water'] = thermo.c_water;
+                paramsToSave['Lf'] = thermo.Lf;
+            }
 
             const state = {
                 theme: document.body.className,
@@ -1383,6 +1480,32 @@
                         updateSliderFill(slider);
                     }
                 }
+                // Load radiate
+                if (state.params.radiate !== undefined) {
+                    thermo.radiate = state.params.radiate;
+                }
+                if (state.params.autoCool !== undefined) {
+                    thermo.autoCool = state.params.autoCool;
+                }
+                if (state.params.fanPower !== undefined) {
+                    thermo.fanPower = parseFloat(state.params.fanPower);
+                }
+                if (state.params.T_env !== undefined) {
+                    thermo.T_env = parseFloat(state.params.T_env);
+                }
+                // Load power
+                if (state.params.power !== undefined) {
+                    thermo.power = state.params.power;
+                }
+                // Load c_water
+                if (state.params.c_water !== undefined) {
+                    thermo.c_water = state.params.c_water;
+                }
+                // Load Lf
+                if (state.params.Lf !== undefined) {
+                    thermo.Lf = state.params.Lf;
+                }
+
                 resetExperiment(); // Áp dụng các giá trị vừa set vào mô phỏng
             }
         }
@@ -1652,4 +1775,4 @@
     </script>
 </body>
 </html>
-Một số tính năng còn chưa hoàn thiện! Mình sẽ tiếp tục cập nhật trong thời gian tới.
+Một số tính năng còn chưa hoàn thiện! Chúng tôi sẽ tiếp tục cập nhật trong thời gian tới.
