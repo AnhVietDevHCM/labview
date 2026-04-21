@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root { /* biến CSS chung */
+    :root { /* CSS */
       --bg-gradient: linear-gradient(135deg, #0a0f14, #161b22);
       --accent-color: #00f7ff; /* màu Cyan */
       --accent-color-dark: #f700ff; /* màu Magenta Glow */
@@ -24,7 +24,7 @@
       --border-radius-main: 16px;
     }
 
-    body { /* kiểu chung cho phần body */
+    body { /* kiểu chung  */
       position: relative;
       background: var(--bg-gradient);
       color: var(--text-color);
@@ -41,7 +41,7 @@
       font-weight: 600;
       animation: text-glow 2s ease-in-out infinite alternate;
     }
-    /* hiệu ứng nền Aurora */
+    /* hiệu ứng nền */
     body::before {
         content: '';
         position: fixed;
@@ -72,7 +72,7 @@
         100% { transform: translate(0, 0); }
     }
 
-    /* kiểu classes */
+   
     body.theme-deep-space { --bg-gradient: linear-gradient(135deg, #1D2B64, #000000); }
     body.theme-nebula { --bg-gradient: linear-gradient(135deg, #23074d, #cc5333); }
     body.theme-sunset { --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
@@ -276,8 +276,97 @@
     .chart-container {
       flex-grow: 1; min-width: 200px; padding: 10px;
     }
+    .log-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .compact-field {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      margin: 8px 0 10px;
+      font-size: 0.9em;
+      color: var(--text-color-muted);
+    }
+    .compact-field input[type="number"] {
+      width: 70px;
+      margin: 0;
+    }
+    .compact-field input[type="checkbox"] {
+      transform: translateY(1px);
+    }
+    .record-status {
+      font-size: 0.85em;
+      color: var(--text-color-muted);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .log-table-wrap {
+      max-height: 170px;
+      overflow: auto;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .log-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78em;
+    }
+    .log-table th, .log-table td {
+      border-bottom: 1px solid var(--border-color);
+      padding: 6px 8px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .log-table th {
+      position: sticky;
+      top: 0;
+      background: rgba(11, 15, 22, 0.95);
+      color: var(--accent-color);
+    }
+    .task-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88em;
+      color: var(--text-color-muted);
+    }
+    .task-item.done {
+      color: var(--text-color);
+    }
+    .task-badge {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75em;
+      border: 1px solid var(--border-color);
+      color: var(--text-color-muted);
+      flex-shrink: 0;
+    }
+    .task-item.done .task-badge {
+      border-color: var(--accent-color);
+      color: #071319;
+      background: var(--accent-color);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
 
-    /* Theme switcher */
+    /* chủ đề của ứng dụng */
     .theme-switcher {
         position: relative;
         display: flex;
@@ -339,7 +428,7 @@
     }
 
     .sidebar-toggle {
-      display: none; /* Hidden by default, shown on mobile */
+      display: none; /* hiển thị trên thiết bị di động */
       position: fixed;
       top: 10px;
       left: 10px;
@@ -353,9 +442,9 @@
       backdrop-filter: blur(5px);
     }
 
-    /* Animation for sidebar */ 
+    /* hiệu ứng cho thanh bên */ 
     
-    /* Responsive */
+    /* điều chỉnh cho thiết bị di động */
     @media (max-width: 768px) {
         .sidebar {
           position: fixed;
@@ -377,7 +466,7 @@
     .sidebar-toggle .icon { transition: transform 0.3s ease; }
     .sidebar.open + .main-content .sidebar-toggle .icon { transform: rotate(90deg); }
 
-    /* Custom scrollbar */
+    /* thanh cuộn tùy chỉnh */
     ::-webkit-scrollbar {
       width: 8px;
     }
@@ -433,6 +522,40 @@
       <div class="card" id="info" style="animation-delay: 0.4s;"></div>
 
       <div class="card" style="animation-delay: 0.5s;">
+        <div class="card-header"><svg class="icon" viewBox="0 0 24 24"><path d="M3 3h18v2H3V3zm2 4h14c1.1 0 2 .9 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9c0-1.1.9-2 2-2zm2 3v2h10v-2H7zm0 4v2h6v-2H7z"/></svg>Nhật ký thí nghiệm</div>
+        <div class="log-controls">
+          <button onclick="logSample()" title="Ghi dữ liệu hiện tại">Ghi mẫu</button>
+          <button onclick="clearLabRecords()" title="Xóa toàn bộ dữ liệu">Xóa mẫu</button>
+          <button onclick="exportLabRecords()" title="Xuất dữ liệu CSV">Xuất CSV</button>
+        </div>
+        <div class="compact-field">
+          <label for="autoRecordSec">Tự ghi mỗi</label>
+          <input type="number" id="autoRecordSec" min="0.2" max="30" step="0.1" value="1">
+          <span>giây</span>
+          <label><input type="checkbox" id="autoRecordEnabled"> Bật</label>
+        </div>
+        <div id="recordStatus" class="record-status">Chưa có mẫu dữ liệu.</div>
+        <div class="log-table-wrap">
+          <table class="log-table" id="recordTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Thời điểm</th>
+                <th>Thí nghiệm</th>
+                <th>Tóm tắt</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="animation-delay: 0.55s;">
+        <div class="card-header"><svg class="icon" viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg>Mục tiêu học tập</div>
+        <ul id="taskList" class="task-list"></ul>
+      </div>
+
+      <div class="card" style="animation-delay: 0.6s;">
         <div class="card-header"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 11s-.67 1.5-1.5 1.5zm3-4c-.83 0-1.5-.67-1.5-1.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>Giao diện</div>
         <div class="theme-switcher">
           <div class="theme-dot" id="theme-default" title="Mặc định" onclick="changeTheme('theme-default')"></div>
@@ -467,18 +590,19 @@
         let chartData = { KE: [], PE: [], E: [], labels: [] };
         const timeStep = 0.016; // ~60 FPS
 
-        // --- Con lắc đơn ---
+        // Con lắc đơn
         let pendulum = { // Các thông số cho thí nghiệm con lắc đơn
             length: 1, // Chiều dài dây treo (mét)
-            angle: Math.PI / 6, // rad
+            angle: Math.PI / 6, // góc (rad)
             damping: 0.1, // Hệ số cản của môi trường
             aVel: 0, aAcc: 0,
-            gravity: 9.81, // m/s^2
+            gravity: 9.81, // gia tốc trọng trường (m/s^2)
             origin: { x: 350, y: 60 },
-            mass: 0.2 // kg
+            mass: 0.2, // kg
+            t: 0 // thời gian mô phỏng
         };
 
-        // --- Lò xo ---
+        // Lò xo
         let spring = { // Các thông số cho thí nghiệm con lắc lò xo (treo thẳng đứng)
             k: 20, // N/m
             mass: 0.5, // kg
@@ -487,7 +611,7 @@
             t: 0 // Thời gian mô phỏng (s)
         };
 
-        // --- Ném ngang ---
+        // Ném ngang
         let projectile = { // Các thông số cho thí nghiệm ném ngang
             x: 60, y: 60,
             vx: 10, // m/s
@@ -501,7 +625,7 @@
             mass: 0.1 // kg
         };
 
-        // --- Khí lý tưởng ---
+        // Khí lý tưởng
         let idealGas = {
             P: 101325, // Pa
             V: 0.0224, // m³
@@ -513,15 +637,15 @@
             molecules: []
         };
 
-        // --- Nhiệt động lực học ---
+        // Nhiệt động lực học
         let thermo = { // Các thông số cho thí nghiệm nhiệt động lực học
             Q: 0, // Nhiệt lượng trao đổi (J)
             m: 1, // kg
-            c: 4200, // Nhiệt dung riêng (J/kg.K) - giá trị này không được dùng trực tiếp, thay vào đó là c_water, c_ice
-            c_water: 4200, // Nhiệt dung riêng của nước
-            c_ice: 2100,   // Nhiệt dung riêng của đá (không dùng trực tiếp)
-            Lf: 334000,  // Ẩn nhiệt nóng chảy (J/kg)
-            // Lv: 2260000, // Ẩn nhiệt hóa hơi (J/kg) - removed để giữ đúng biểu diễn tan chảy, không sôi
+            c: 4200, // Nhiệt dung riêng mặc định (J/kg.K)
+            c_water: 4200, // Nhiệt dung riêng của nước (J/kg.K)
+            c_ice: 2100,   // Nhiệt dung riêng của đá (J/kg.K)
+            Lf: 334000,  // nhiệt nóng chảy (J/kg)
+            // Lv: 2260000, //  nhiệt hóa hơi (J/kg) - có thể thêm nếu muốn mô phỏng cả quá trình bay hơi
             T0: 25, // Nhiệt độ ban đầu (°C)
             T: 25, // Nhiệt độ hiện tại (°C)
             heating: false, // Trạng thái đang đun nóng hay không
@@ -531,35 +655,341 @@
             T_env: 20, // Nhiệt độ môi trường (°C)
             hasIce: false, // Có cục đá hay không
             power: 500, // Công suất đun nóng (W)
-            state: 'LIQUID', // Trạng thái vật chất: SOLID, LIQUID, MELTING
-            lastUpdate: 0, // Mốc thời gian để tính delta time
+            state: 'LIQUID', // Trạng thái vật chất: rắn (ICE), lỏng (LIQUID), khí (GAS)
+            lastUpdate: 0, // Mốc thời gian để tính delta t
             m_container: 0.5, // Khối lượng bình chứa (kg)
-            c_container: 900,  // J/kg.K (Nhôm)
+            c_container: 900,  // nhiệt dung riêng của bình chứa (J/kg.K) (Nhôm)
             t: 0 // Thời gian mô phỏng
         };
 
-        // --- Con lắc lò xo ngang ---
+        // Con lắc lò xo ngang
         let spring_horizontal = {
-            k: 20, // N/m
-            mass: 0.5, // kg
-            amplitude: 0.2, // m
+            k: 20, // độ cứng (N/m)
+            mass: 0.5, // khối lượng (kg)
+            amplitude: 0.2, // biên độ (m)
             damping: 0.2, // Hệ số cản
             x0: 350, // Vị trí cân bằng (px)
             t: 0 // thời gian mô phỏng
         };
 
-        // --- Mặt phẳng nghiêng ---
+        // Mặt phẳng nghiêng
         let inclined_plane = {
-            angle: 30, // độ
-            mass: 1, // kg
-            g: 9.81,
+            angle: 30, // góc (độ)
+            mass: 1, // khối lượng vật (kg)
+            g: 9.81, // gia tốc trọng trường (m/s^2)
             friction: 0.1, // Hệ số ma sát
             F_pull: 0, // Lực kéo (N)
             s: 0, // Quãng đường đi được (m) - s > 0 là đi lên, s < 0 là đi xuống
             v: 0, t: 0 // Vận tốc (m/s), thời gian (s)
         };
 
-        // --- Khởi tạo các phân tử khí cho mô phỏng khí lý tưởng ---
+        // Nâng cấp workflow học tập
+        const labRecords = [];
+        const MAX_RECORDS = 1000;
+        const experimentStats = {};
+        let autoRecordEnabled = false;
+        let autoRecordIntervalSec = 1;
+        let lastAutoRecordAt = 0;
+
+        function getExperimentStats(exp = experiment) {
+            if (!experimentStats[exp]) {
+                experimentStats[exp] = {
+                    paramChanges: 0,
+                    samples: 0,
+                    pauseUsed: false,
+                    speedUsed: false
+                };
+            }
+            return experimentStats[exp];
+        }
+
+        function formatMetric(value, precision = 3) {
+            return Number.isFinite(value) ? Number(value).toFixed(precision) : '--';
+        }
+
+        function getSimulationTime() {
+            if (experiment === 'pendulum') return pendulum.t || 0;
+            if (experiment === 'spring') return spring.t || 0;
+            if (experiment === 'projectile') return projectile.t || 0;
+            if (experiment === 'ideal_gas') return idealGas.t || 0;
+            if (experiment === 'thermo') return thermo.t || 0;
+            if (experiment === 'spring_horizontal') return spring_horizontal.t || 0;
+            if (experiment === 'inclined_plane') return inclined_plane.t || 0;
+            return 0;
+        }
+
+        function getEnergySnapshot() {
+            if (experiment === 'pendulum') {
+                const h = pendulum.length * (1 - Math.cos(pendulum.angle));
+                const PE = pendulum.mass * pendulum.gravity * h;
+                const v = pendulum.length * pendulum.aVel;
+                const KE = 0.5 * pendulum.mass * v * v;
+                return { KE, PE, E: KE + PE };
+            }
+            if (experiment === 'spring') {
+                const omega = Math.sqrt(spring.k / spring.mass);
+                const currentAmplitude = spring.amplitude * Math.exp(-(spring.damping / (2 * spring.mass)) * spring.t);
+                const x = currentAmplitude * Math.cos(omega * spring.t);
+                const v = -Math.exp(-(spring.damping / (2 * spring.mass)) * spring.t) *
+                    (((spring.damping / (2 * spring.mass)) * spring.amplitude * Math.cos(omega * spring.t)) + (omega * spring.amplitude * Math.sin(omega * spring.t)));
+                const KE = 0.5 * spring.mass * v * v;
+                const PE = 0.5 * spring.k * x * x;
+                return { KE, PE, E: KE + PE };
+            }
+            if (experiment === 'spring_horizontal') {
+                const omega = Math.sqrt(spring_horizontal.k / spring_horizontal.mass);
+                const currentAmplitude = spring_horizontal.amplitude * Math.exp(-(spring_horizontal.damping / (2 * spring_horizontal.mass)) * spring_horizontal.t);
+                const x = currentAmplitude * Math.cos(omega * spring_horizontal.t);
+                const v = -Math.exp(-(spring_horizontal.damping / (2 * spring_horizontal.mass)) * spring_horizontal.t) *
+                    (((spring_horizontal.damping / (2 * spring_horizontal.mass)) * spring_horizontal.amplitude * Math.cos(omega * spring_horizontal.t)) + (omega * spring_horizontal.amplitude * Math.sin(omega * spring_horizontal.t)));
+                const KE = 0.5 * spring_horizontal.mass * v * v;
+                const PE = 0.5 * spring_horizontal.k * x * x;
+                return { KE, PE, E: KE + PE };
+            }
+            if (experiment === 'projectile') {
+                const scale = 40;
+                const currentH = (projectile.ground - projectile.y) / scale;
+                const vTotal = Math.sqrt(projectile.vx * projectile.vx + projectile.vy * projectile.vy);
+                const KE = 0.5 * projectile.mass * vTotal * vTotal;
+                const PE = projectile.mass * projectile.g * Math.max(0, currentH);
+                return { KE, PE, E: KE + PE };
+            }
+            if (experiment === 'inclined_plane') {
+                const rad = inclined_plane.angle * Math.PI / 180;
+                const h = Math.max(0, inclined_plane.s * Math.sin(rad));
+                const KE = 0.5 * inclined_plane.mass * Math.pow(inclined_plane.v, 2);
+                const PE = inclined_plane.mass * inclined_plane.g * h;
+                return { KE, PE, E: KE + PE };
+            }
+            return null;
+        }
+
+        function getCurrentRecordValues() {
+            const energy = getEnergySnapshot();
+            if (experiment === 'pendulum') {
+                return {
+                    angle_deg: pendulum.angle * 180 / Math.PI,
+                    omega_rad_s: pendulum.aVel,
+                    KE_J: energy ? energy.KE : 0,
+                    PE_J: energy ? energy.PE : 0,
+                    E_J: energy ? energy.E : 0
+                };
+            }
+            if (experiment === 'spring') {
+                return {
+                    t_s: spring.t,
+                    k_N_m: spring.k,
+                    m_kg: spring.mass,
+                    KE_J: energy ? energy.KE : 0,
+                    PE_J: energy ? energy.PE : 0,
+                    E_J: energy ? energy.E : 0
+                };
+            }
+            if (experiment === 'spring_horizontal') {
+                return {
+                    t_s: spring_horizontal.t,
+                    k_N_m: spring_horizontal.k,
+                    m_kg: spring_horizontal.mass,
+                    KE_J: energy ? energy.KE : 0,
+                    PE_J: energy ? energy.PE : 0,
+                    E_J: energy ? energy.E : 0
+                };
+            }
+            if (experiment === 'projectile') {
+                return {
+                    t_s: projectile.t,
+                    x_px: projectile.x,
+                    y_px: projectile.y,
+                    vx_m_s: projectile.vx,
+                    vy_m_s: projectile.vy,
+                    KE_J: energy ? energy.KE : 0,
+                    PE_J: energy ? energy.PE : 0,
+                    E_J: energy ? energy.E : 0
+                };
+            }
+            if (experiment === 'ideal_gas') {
+                const vAvg = idealGas.T > 0 ? Math.sqrt(3 * idealGas.R * idealGas.T / idealGas.M) : 0;
+                return {
+                    P_kPa: idealGas.P / 1000,
+                    V_m3: idealGas.V,
+                    T_K: idealGas.T,
+                    n_mol: idealGas.n,
+                    molecule_count: idealGas.molecules.length,
+                    v_avg_m_s: vAvg
+                };
+            }
+            if (experiment === 'thermo') {
+                return {
+                    t_s: thermo.t,
+                    T_C: thermo.T,
+                    state: thermo.state,
+                    Q_J: thermo.Q,
+                    power_W: thermo.power,
+                    fan_W: thermo.fanPower
+                };
+            }
+            if (experiment === 'inclined_plane') {
+                return {
+                    t_s: inclined_plane.t,
+                    s_m: inclined_plane.s,
+                    v_m_s: inclined_plane.v,
+                    angle_deg: inclined_plane.angle,
+                    F_pull_N: inclined_plane.F_pull,
+                    KE_J: energy ? energy.KE : 0,
+                    PE_J: energy ? energy.PE : 0,
+                    E_J: energy ? energy.E : 0
+                };
+            }
+            return {};
+        }
+
+        function logSample(source = 'manual') {
+            const values = getCurrentRecordValues();
+            const now = new Date();
+            labRecords.push({
+                id: labRecords.length + 1,
+                source,
+                experiment,
+                isoTime: now.toISOString(),
+                displayTime: now.toLocaleTimeString('vi-VN', { hour12: false }),
+                simTime: getSimulationTime(),
+                values
+            });
+            if (labRecords.length > MAX_RECORDS) labRecords.shift();
+            getExperimentStats().samples++;
+            renderRecordTable();
+            renderTaskChecklist();
+        }
+
+        function clearLabRecords() {
+            labRecords.length = 0;
+            getExperimentStats().samples = 0;
+            renderRecordTable();
+            renderTaskChecklist();
+        }
+
+        function csvEscape(value) {
+            const text = value === null || value === undefined ? '' : String(value);
+            return `"${text.replace(/"/g, '""')}"`;
+        }
+
+        function exportLabRecords() {
+            if (labRecords.length === 0) {
+                alert('Chưa có dữ liệu để xuất.');
+                return;
+            }
+            const metricKeys = [...new Set(labRecords.flatMap(record => Object.keys(record.values || {})))];
+            const columns = ['stt', 'thoi_diem', 'thoi_diem_iso', 'thi_nghiem', 'thoi_gian_mo_phong_s', 'nguon', ...metricKeys];
+            const rows = labRecords.map((record, index) => {
+                const base = [
+                    index + 1,
+                    record.displayTime,
+                    record.isoTime,
+                    record.experiment,
+                    Number.isFinite(record.simTime) ? record.simTime.toFixed(4) : '',
+                    record.source
+                ];
+                const metricValues = metricKeys.map(key => {
+                    if (!record.values) return '';
+                    const value = record.values[key];
+                    return value === undefined || value === null ? '' : value;
+                });
+                return [...base, ...metricValues];
+            });
+            const csvContent = [
+                columns.map(csvEscape).join(','),
+                ...rows.map(row => row.map(csvEscape).join(','))
+            ].join('\n');
+            const blob = new Blob([`\uFEFF${csvContent}`], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `virtual_lab_records_${Date.now()}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function getRecordSummary(values) {
+            const keys = Object.keys(values || {}).slice(0, 2);
+            if (keys.length === 0) return 'Không có dữ liệu';
+            return keys.map(key => {
+                const val = values[key];
+                const text = typeof val === 'number' ? formatMetric(val, 2) : String(val);
+                return `${key}: ${text}`;
+            }).join(' | ');
+        }
+
+        function renderRecordTable() {
+            const tbody = document.querySelector('#recordTable tbody');
+            const status = document.getElementById('recordStatus');
+            if (!tbody || !status) return;
+            if (labRecords.length === 0) {
+                tbody.innerHTML = '';
+                status.innerText = 'Chưa có mẫu dữ liệu.';
+                return;
+            }
+            const recentRecords = labRecords.slice(-8).reverse();
+            tbody.innerHTML = recentRecords.map((record, idx) => `
+                <tr>
+                    <td>${labRecords.length - idx}</td>
+                    <td>${record.displayTime}</td>
+                    <td>${record.experiment}</td>
+                    <td>${getRecordSummary(record.values)}</td>
+                </tr>
+            `).join('');
+            status.innerText = `Tổng mẫu: ${labRecords.length} | Tự ghi: ${autoRecordEnabled ? `Bật (${autoRecordIntervalSec}s)` : 'Tắt'}`;
+        }
+
+        function syncAutoRecordControls() {
+            const secInput = document.getElementById('autoRecordSec');
+            const enabledInput = document.getElementById('autoRecordEnabled');
+            if (secInput) secInput.value = autoRecordIntervalSec;
+            if (enabledInput) enabledInput.checked = autoRecordEnabled;
+            renderRecordTable();
+        }
+
+        function updateAutoRecordSettings() {
+            const secInput = document.getElementById('autoRecordSec');
+            const enabledInput = document.getElementById('autoRecordEnabled');
+            const interval = parseFloat(secInput ? secInput.value : '');
+            autoRecordIntervalSec = Number.isFinite(interval) ? Math.min(30, Math.max(0.2, interval)) : 1;
+            autoRecordEnabled = !!(enabledInput && enabledInput.checked);
+            if (secInput) secInput.value = autoRecordIntervalSec;
+            lastAutoRecordAt = performance.now();
+            renderRecordTable();
+            saveState();
+        }
+
+        function maybeAutoRecord(nowMs) {
+            if (!autoRecordEnabled || isPaused) return;
+            if ((nowMs - lastAutoRecordAt) >= autoRecordIntervalSec * 1000) {
+                logSample('auto');
+                lastAutoRecordAt = nowMs;
+            }
+        }
+
+        function renderTaskChecklist() {
+            const taskList = document.getElementById('taskList');
+            if (!taskList) return;
+            const stats = getExperimentStats();
+            const chartPoints = (chartData && Array.isArray(chartData.labels)) ? chartData.labels.length : 0;
+            const tasks = [
+                { done: stats.paramChanges > 0, label: 'Đã thay đổi ít nhất 1 thông số.' },
+                { done: stats.pauseUsed || stats.speedUsed, label: 'Đã dùng nút tạm dừng hoặc tua tốc độ.' },
+                { done: chartPoints >= 20, label: 'Đồ thị đã tích lũy tối thiểu 20 điểm.' },
+                { done: stats.samples >= 3, label: 'Đã ghi tối thiểu 3 mẫu dữ liệu.' }
+            ];
+            taskList.innerHTML = tasks.map(task => `
+                <li class="task-item ${task.done ? 'done' : ''}">
+                    <span class="task-badge">${task.done ? '✓' : '•'}</span>
+                    <span>${task.label}</span>
+                </li>
+            `).join('');
+        }
+
+        // Khởi tạo các phân tử khí cho mô phỏng khí lý tưởng
         function initMolecules() {
             idealGas.molecules = [];
             let count = Math.min(Math.round(idealGas.n * 50), 100);
@@ -575,7 +1005,7 @@
             }
         }
 
-        // --- Vẽ lại con lắc đơn trên canvas ---
+        // Vẽ lại con lắc đơn trên canvas
         function drawPendulum() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             let pxLength = pendulum.length * 150; // Chuyển đổi độ dài từ mét sang pixel để vẽ
@@ -600,15 +1030,16 @@
             ctx.fill();
         }
 
-        // --- Cập nhật trạng thái của con lắc đơn ---
-        function updatePendulum() {
+        // Cập nhật trạng thái của con lắc đơn
+        function updatePendulum(dt = timeStep) {
             pendulum.aAcc = (-pendulum.gravity / pendulum.length) * Math.sin(pendulum.angle);
             let dampingForce = -pendulum.damping * pendulum.aVel;
-            pendulum.aVel += (pendulum.aAcc + dampingForce) * timeStep;
-            pendulum.angle += pendulum.aVel * timeStep;
+            pendulum.aVel += (pendulum.aAcc + dampingForce) * dt;
+            pendulum.angle += pendulum.aVel * dt;
+            pendulum.t += dt;
         }
 
-        // --- Vẽ lại lò xo thẳng đứng trên canvas ---
+        // Vẽ lại lò xo thẳng đứng trên canvas
         function drawSpring() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             let omega = Math.sqrt(spring.k / spring.mass);
@@ -634,12 +1065,12 @@
             ctx.fill();
         }
 
-        // --- Cập nhật trạng thái của lò xo thẳng đứng ---
-        function updateSpring() {
-            spring.t += timeStep;
+        // Cập nhật trạng thái của lò xo thẳng đứng
+        function updateSpring(dt = timeStep) {
+            spring.t += dt;
         }
 
-        // --- Vẽ lại con lắc lò xo ngang trên canvas ---
+        // Vẽ lại con lắc lò xo ngang trên canvas
         function drawSpringHorizontal() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             let omega = Math.sqrt(spring_horizontal.k / spring_horizontal.mass);
@@ -658,12 +1089,12 @@
             ctx.fill();
         }
 
-        // --- Cập nhật trạng thái của con lắc lò xo ngang ---
-        function updateSpringHorizontal() {
-            spring_horizontal.t += timeStep;
+        // Cập nhật trạng thái của con lắc lò xo ngang
+        function updateSpringHorizontal(dt = timeStep) {
+            spring_horizontal.t += dt;
         }
 
-        // --- Vẽ lại vật ném ngang trên canvas ---
+        // Vẽ lại vật ném ngang trên canvas
         function drawProjectile() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
@@ -681,25 +1112,25 @@
             ctx.shadowBlur = 0;
         }
 
-        // --- Cập nhật trạng thái của vật ném ngang ---
-        function updateProjectile() {
+        // Cập nhật trạng thái của vật ném ngang
+        function updateProjectile(dt = timeStep) {
             const scale = 40; // Tỷ lệ: 40px trên canvas tương ứng 1m trong thực tế
             if (projectile.y + projectile.radius < projectile.ground) {
-                projectile.t += timeStep * speed;
+                projectile.t += dt;
                 // Cập nhật vận tốc (có tính lực cản không khí)
-                projectile.vy += projectile.g * timeStep * speed;
-                projectile.vx -= projectile.damping * projectile.vx * timeStep * speed;
-                projectile.vy -= projectile.damping * projectile.vy * timeStep * speed;
+                projectile.vy += projectile.g * dt;
+                projectile.vx -= projectile.damping * projectile.vx * dt;
+                projectile.vy -= projectile.damping * projectile.vy * dt;
                 // Cập nhật vị trí dựa trên vận tốc
-                projectile.x += projectile.vx * timeStep * speed * scale;
-                projectile.y += projectile.vy * timeStep * speed * scale;
+                projectile.x += projectile.vx * dt * scale;
+                projectile.y += projectile.vy * dt * scale;
             } else {
                 // Khi chạm đất, đảm bảo vật dừng chính xác trên mặt đất, không bị lún xuống
                 projectile.y = projectile.ground - projectile.radius;
             }
         }
 
-        // --- Vẽ lại mô phỏng khí lý tưởng trên canvas ---
+        // Vẽ lại mô phỏng khí lý tưởng trên canvas
         function drawIdealGas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.strokeStyle = "#fff";
@@ -720,12 +1151,13 @@
             });
         }
 
-        // --- Cập nhật trạng thái của các phân tử khí ---
-        function updateIdealGas() {
+        // Cập nhật trạng thái của các phân tử khí
+        function updateIdealGas(dt = timeStep) {
             if (isPaused) return;
             let maxVolumeDisplay = 0.1;
             let volumeHeight = (idealGas.V / maxVolumeDisplay) * idealGas.box.h;
             let pistonY = idealGas.box.y + volumeHeight; // Vị trí của piston, V tăng -> piston xuống dưới -> thể tích lớn
+            idealGas.t = (idealGas.t || 0) + dt;
             if (idealGas.T == 0) { // Dừng chuyển động hoàn toàn khi T=0K (điểm không tuyệt đối)
                 idealGas.molecules.forEach(mol => {
                     mol.vx = 0; mol.vy = 0; // Vận tốc phân tử về 0, các phân tử dừng chuyển động
@@ -736,8 +1168,8 @@
 
             idealGas.P = (idealGas.n * idealGas.R * idealGas.T) / idealGas.V;
             idealGas.molecules.forEach(mol => {
-                mol.x += mol.vx * speed;
-                mol.y += mol.vy * speed;
+                mol.x += mol.vx * dt * 60;
+                mol.y += mol.vy * dt * 60;
                 // Va chạm với tường trái/phải
                 if (mol.x < idealGas.box.x + 5) {
                     mol.x = idealGas.box.x + 5; // Ngăn không cho dính vào tường
@@ -760,7 +1192,7 @@
             });
         }
 
-        // --- Vẽ lại mô phỏng nhiệt động lực học trên canvas ---
+        // Vẽ lại mô phỏng nhiệt động lực học trên canvas
         function drawThermo() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
@@ -853,7 +1285,7 @@
             }
         }
 
-        // --- Cập nhật trạng thái của thí nghiệm nhiệt động lực học ---
+        // Cập nhật trạng thái của thí nghiệm nhiệt động lực học
         function updateThermo() {
             let now = Date.now();
             let dt = (now - (thermo.lastUpdate || now)) / 1000;
@@ -882,7 +1314,6 @@
                 }
                 case 'MELTING': {
                     // Nhiệt độ không đổi, chỉ có nhiệt lượng thay đổi
-                    thermo.Q += energyChange;
                     if (thermo.Q > thermo.m * thermo.Lf) {
                         thermo.Q = thermo.Q - thermo.m * thermo.Lf;
                         thermo.state = 'LIQUID';
@@ -908,7 +1339,7 @@
             }
         }
 
-        // --- Vẽ lại mô phỏng mặt phẳng nghiêng trên canvas ---
+        // Vẽ lại mô phỏng mặt phẳng nghiêng trên canvas
         function drawInclinedPlane() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             let rad = inclined_plane.angle * Math.PI / 180;
@@ -938,8 +1369,8 @@
             ctx.restore();
         }
 
-        // --- Cập nhật trạng thái của vật trên mặt phẳng nghiêng ---
-        function updateInclinedPlane() {
+        // Cập nhật trạng thái của vật trên mặt phẳng nghiêng
+        function updateInclinedPlane(dt = timeStep) {
             const planeLengthM = (600 - 150) / 40 / Math.cos(inclined_plane.angle * Math.PI / 180);
             const rad = inclined_plane.angle * Math.PI / 180;
             const m = inclined_plane.mass;
@@ -969,13 +1400,13 @@
 
             // Chỉ cập nhật chuyển động nếu vật chưa ra khỏi mặt phẳng
             if (inclined_plane.s < planeLengthM && inclined_plane.s >= 0) {
-                inclined_plane.v += a * timeStep * speed;
-                inclined_plane.s += inclined_plane.v * timeStep * speed;
-                inclined_plane.t += timeStep * speed;
+                inclined_plane.v += a * dt;
+                inclined_plane.s += inclined_plane.v * dt;
+                inclined_plane.t += dt;
             }
         }
 
-        // --- Hiển thị công thức tương ứng với thí nghiệm hiện tại ---
+        // Hiển thị công thức tương ứng với thí nghiệm hiện tại
         function showFormula() {
             let html = '';
             if (experiment === 'pendulum') {
@@ -997,7 +1428,7 @@
             if (window.MathJax) MathJax.typesetPromise();
         }
 
-        // --- Tính toán đường cong phân bố Maxwell-Boltzmann lý thuyết ---
+        // Tính toán đường cong phân bố Maxwell-Boltzmann lý thuyết
         function getMaxwellBoltzmannDistribution(T, M) {
             const R = 8.314;
             const k = 4 * Math.PI * Math.pow(M / (2 * Math.PI * R * T), 1.5);
@@ -1012,7 +1443,7 @@
             return { velocities, probabilities };
         }
 
-        // --- Hiển thị thông tin chi tiết và các giá trị tính toán của thí nghiệm ---
+        // Hiển thị thông tin chi tiết và các giá trị tính toán của thí nghiệm
         function showInfo() {
             let html = '';
             if (experiment === 'pendulum') {
@@ -1031,7 +1462,7 @@
                     Chu kỳ: ${(2 * Math.PI * Math.sqrt(pendulum.length / pendulum.gravity)).toFixed(2)} s<br>
                     Động năng (KE): ${KE.toFixed(3)} J<br>
                     Thế năng (PE): ${PE.toFixed(3)} J<br>
-                    Năng lượng (E): ${E.toFixed(3)} J
+                    Cơ năng (E): ${E.toFixed(3)} J
                 `;
             } else if (experiment === 'spring') {
                 let omega = Math.sqrt(spring.k / spring.mass);
@@ -1156,7 +1587,7 @@
         }
         
 
-        // --- Hiển thị các thanh trượt để điều chỉnh thông số thí nghiệm ---
+        // Hiển thị các thanh trượt để điều chỉnh thông số thí nghiệm
         function showParams() {
             let html = '';
             if (experiment === 'pendulum') {
@@ -1262,7 +1693,7 @@
             }
         }
 
-        // --- Đặt lại trạng thái của thí nghiệm về giá trị ban đầu (dựa trên các thanh trượt) ---
+        // Đặt lại trạng thái của thí nghiệm về giá trị ban đầu (dựa trên các thanh trượt)
         function resetExperiment() {
             if (experiment === 'pendulum') {
                 pendulum.angle = (parseFloat(document.getElementById('angle').value) || 30) * Math.PI / 180;
@@ -1271,6 +1702,7 @@
                 pendulum.damping = parseFloat(document.getElementById('damping').value) || 0.1;
                 pendulum.aVel = 0;
                 pendulum.aAcc = 0;
+                pendulum.t = 0;
             } else if (experiment === 'spring') {
                 spring.k = parseFloat(document.getElementById('k').value) || 20;
                 spring.mass = parseFloat(document.getElementById('mass').value) || 0.5;
@@ -1291,6 +1723,7 @@
                 idealGas.n = parseFloat(document.getElementById('n').value) || 1;
                 idealGas.T = parseFloat(document.getElementById('T').value);
                 idealGas.P = (idealGas.n * idealGas.R * idealGas.T) / idealGas.V;
+                idealGas.t = 0;
                 initMolecules();
             } else if (experiment === 'thermo') {
                 thermo.m = parseFloat(document.getElementById('m').value) || 1;
@@ -1307,6 +1740,7 @@
                 thermo.T = thermo.T0;
                 thermo.Q = 0;
                 thermo.t = 0;
+                thermo.lastUpdate = Date.now();
                 thermo.state = thermo.T < 0 ? 'SOLID' : 'LIQUID';
                 if (thermo.T === 0) thermo.state = 'MELTING';
             } else if (experiment === 'spring_horizontal') {
@@ -1331,11 +1765,12 @@
             }
         }
 
-        // --- Xử lý khi người dùng chọn một thí nghiệm khác từ dropdown ---
-        function changeExperiment() {
+        // Xử lý khi người dùng chọn một thí nghiệm khác từ dropdown
+        function changeExperiment(shouldSave = true) {
             experiment = document.getElementById('experiment').value;
             setupChartForExperiment(); // Khởi tạo lại biểu đồ cho phù hợp với thí nghiệm mới
             showParams();
+            getExperimentStats(experiment);
             // Cập nhật checkbox cho thermo
             if (experiment === 'thermo') {
                 document.getElementById('radiate').checked = thermo.radiate;
@@ -1352,9 +1787,12 @@
 
             resetExperiment();
             showFormula();
+            renderTaskChecklist();
+            renderRecordTable();
+            if (shouldSave) saveState();
         }
         
-        // --- Tạm dừng hoặc tiếp tục mô phỏng ---
+        // Tạm dừng hoặc tiếp tục mô phỏng
         function togglePause() {
             isPaused = !isPaused;
             const pauseBtnText = document.querySelector('#pauseBtn .btn-text');
@@ -1363,7 +1801,9 @@
             if (pauseBtnText) pauseBtnText.innerText = isPaused ? 'Tiếp tục' : 'Tạm dừng';
             if (playIcon) playIcon.style.display = isPaused ? 'inline' : 'none';
             if (pauseIcon) pauseIcon.style.display = isPaused ? 'none' : 'inline';
-
+            getExperimentStats().pauseUsed = true;
+            renderTaskChecklist();
+            saveState();
         }
 
         function speedUp() {
@@ -1371,6 +1811,9 @@
             speed *= 2;
             if (speed > 16) speed = 16;
             document.getElementById('speedIndicator').innerText = 'x' + speed;
+            getExperimentStats().speedUsed = true;
+            renderTaskChecklist();
+            saveState();
         }
 
         function speedDown() {
@@ -1378,6 +1821,9 @@
             // Giảm tốc độ mô phỏng
             if (speed < 0.25) speed = 0.25;
             document.getElementById('speedIndicator').innerText = 'x' + speed;
+            getExperimentStats().speedUsed = true;
+            renderTaskChecklist();
+            saveState();
         }
 
         function toggleHeating() {
@@ -1388,6 +1834,7 @@
             if (thermo.heating) heatBtn.classList.add('active-fire');
             else heatBtn.classList.remove('active-fire');
             if (thermo.heating) thermo.lastUpdate = Date.now();
+            saveState();
         }
 
         function addIce() {
@@ -1396,6 +1843,7 @@
             thermo.state = 'SOLID';
             thermo.Q = 0;
             resetExperiment();
+            saveState();
         }
 
         function removeIce() {
@@ -1404,6 +1852,7 @@
             thermo.state = 'LIQUID';
             thermo.Q = 0;
             resetExperiment();
+            saveState();
         }
 
         function changeTheme(themeClass) {
@@ -1417,7 +1866,7 @@
             saveState(); // Lưu trạng thái sau khi đổi theme
         }
 
-        // --- Cập nhật màu nền của thanh trượt để hiển thị giá trị hiện tại ---
+        // Cập nhật màu nền của thanh trượt để hiển thị giá trị hiện tại
         function updateSliderFill(slider) {
             const min = slider.min || 0;
             const max = slider.max || 100;
@@ -1426,29 +1875,27 @@
             slider.style.backgroundSize = `${percentage}% 100%`;
         }
 
-        // --- Lưu và Tải Trạng thái ---
+        // Lưu và Tải Trạng thái
         const STATE_KEY = 'virtualLabState';
 
         function saveState() {
             const paramsToSave = {};
-            document.querySelectorAll('#params input[type="range"]').forEach(slider => {
-                paramsToSave[slider.id] = slider.value;
+            document.querySelectorAll('#params input').forEach(input => {
+                if (!input.id) return;
+                if (input.type === 'checkbox') paramsToSave[input.id] = input.checked;
+                else paramsToSave[input.id] = input.value;
             });
-            // Lưu trạng thái checkbox
-            if (experiment === 'thermo') {
-                paramsToSave['radiate'] = thermo.radiate;
-                paramsToSave['autoCool'] = thermo.autoCool;
-                paramsToSave['fanPower'] = thermo.fanPower;
-                paramsToSave['T_env'] = thermo.T_env;
-                paramsToSave['power'] = thermo.power;
-                paramsToSave['c_water'] = thermo.c_water;
-                paramsToSave['Lf'] = thermo.Lf;
-            }
 
             const state = {
                 theme: document.body.className,
                 experiment: document.getElementById('experiment').value,
-                params: paramsToSave
+                params: paramsToSave,
+                runtime: {
+                    speed,
+                    isPaused,
+                    autoRecordEnabled,
+                    autoRecordIntervalSec
+                }
             };
             localStorage.setItem(STATE_KEY, JSON.stringify(state));
         }
@@ -1456,10 +1903,21 @@
         function loadState() {
             const savedState = localStorage.getItem(STATE_KEY);
             if (!savedState) {
-                changeExperiment(); // Nếu không có trạng thái đã lưu, chạy thiết lập mặc định
+                changeExperiment(false); // Nếu không có trạng thái đã lưu, chạy thiết lập mặc định
+                syncAutoRecordControls();
+                renderTaskChecklist();
                 return;
             }
-            const state = JSON.parse(savedState);
+            let state = null;
+            try {
+                state = JSON.parse(savedState);
+            } catch (err) {
+                console.warn('Không thể đọc trạng thái đã lưu:', err);
+                changeExperiment(false);
+                syncAutoRecordControls();
+                renderTaskChecklist();
+                return;
+            }
             document.body.className = state.theme || 'theme-default';
             // Cập nhật theme dot active
             document.querySelectorAll('.theme-dot').forEach(dot => dot.classList.remove('active'));
@@ -1469,48 +1927,39 @@
             document.getElementById('experiment').value = state.experiment || 'pendulum';
             changeExperiment(false); // Tải thí nghiệm nhưng không lưu lại ngay
 
-            // Áp dụng lại các giá trị slider đã lưu
+            if (state.runtime) {
+                if (Number.isFinite(parseFloat(state.runtime.speed))) {
+                    speed = Math.min(16, Math.max(0.25, parseFloat(state.runtime.speed)));
+                }
+                isPaused = !!state.runtime.isPaused;
+                autoRecordEnabled = !!state.runtime.autoRecordEnabled;
+                const savedInterval = parseFloat(state.runtime.autoRecordIntervalSec);
+                autoRecordIntervalSec = Number.isFinite(savedInterval) ? Math.min(30, Math.max(0.2, savedInterval)) : 1;
+                lastAutoRecordAt = performance.now();
+                document.getElementById('speedIndicator').innerText = 'x' + speed;
+                document.getElementById('playIcon').style.display = isPaused ? 'inline' : 'none';
+                document.getElementById('pauseIcon').style.display = isPaused ? 'none' : 'inline';
+            }
+
+            // Áp dụng lại các giá trị input đã lưu
             if (state.params) {
                 for (const paramId in state.params) {
-                    const slider = document.getElementById(paramId);
-                    if (slider) {
-                        slider.value = state.params[paramId];
+                    const input = document.getElementById(paramId);
+                    if (input) {
+                        if (input.type === 'checkbox') input.checked = !!state.params[paramId];
+                        else input.value = state.params[paramId];
                         const valueSpan = document.getElementById(paramId + '_val');
-                        if (valueSpan) valueSpan.innerText = slider.value;
-                        updateSliderFill(slider);
+                        if (valueSpan && input.type !== 'checkbox') valueSpan.innerText = input.value;
+                        if (input.type === 'range') updateSliderFill(input);
                     }
                 }
-                // Load radiate
-                if (state.params.radiate !== undefined) {
-                    thermo.radiate = state.params.radiate;
-                }
-                if (state.params.autoCool !== undefined) {
-                    thermo.autoCool = state.params.autoCool;
-                }
-                if (state.params.fanPower !== undefined) {
-                    thermo.fanPower = parseFloat(state.params.fanPower);
-                }
-                if (state.params.T_env !== undefined) {
-                    thermo.T_env = parseFloat(state.params.T_env);
-                }
-                // Load power
-                if (state.params.power !== undefined) {
-                    thermo.power = state.params.power;
-                }
-                // Load c_water
-                if (state.params.c_water !== undefined) {
-                    thermo.c_water = state.params.c_water;
-                }
-                // Load Lf
-                if (state.params.Lf !== undefined) {
-                    thermo.Lf = state.params.Lf;
-                }
-
                 resetExperiment(); // Áp dụng các giá trị vừa set vào mô phỏng
             }
+            syncAutoRecordControls();
+            renderTaskChecklist();
         }
 
-        // --- Chart Functions ---
+        // Chart Functions
         function initChart() {
             const chartCanvas = document.getElementById('energyChart').getContext('2d');
             energyChart = new Chart(chartCanvas, {
@@ -1540,7 +1989,7 @@
             });
         }
 
-        // --- Cập nhật dữ liệu cho biểu đồ trong mỗi khung hình ---
+        // Cập nhật dữ liệu cho biểu đồ trong mỗi khung hình
         function updateChartData() {
             let KE = 0, PE = 0, E = 0;
             const MAX_POINTS = 200;
@@ -1551,11 +2000,11 @@
             });
 
             if (['pendulum', 'spring', 'spring_horizontal', 'projectile', 'inclined_plane'].includes(experiment) && energyChart.config.type === 'line') {
-                const infoHtml = document.getElementById('info').innerHTML;
-                const keMatch = infoHtml.match(/Động năng \(KE\): ([\d.-]+) J/);
-                const peMatch = infoHtml.match(/Thế năng \(PE\): ([\d.-]+) J/);
-                if (keMatch) KE = parseFloat(keMatch[1]);
-                if (peMatch) PE = parseFloat(peMatch[1]);
+                const snapshot = getEnergySnapshot();
+                if (snapshot) {
+                    KE = snapshot.KE;
+                    PE = snapshot.PE;
+                }
                 E = KE + PE;
 
                 chartData.KE.push(KE);
@@ -1613,7 +2062,7 @@
             energyChart.update({ duration: 0 });
         }
 
-        // --- Hủy và tạo lại biểu đồ khi chuyển thí nghiệm ---
+        // Hủy và tạo lại biểu đồ khi chuyển thí nghiệm
         function setupChartForExperiment() {
             if (energyChart) energyChart.destroy();
             const chartCanvas = document.getElementById('energyChart').getContext('2d');
@@ -1634,7 +2083,7 @@
             initChart(); // Tên hàm cũ, giờ chỉ dùng để khởi tạo biểu đồ năng lượng
         }
 
-        // --- Khởi tạo biểu đồ phân bố Maxwell-Boltzmann ---
+        // Khởi tạo biểu đồ phân bố Maxwell-Boltzmann
         function initMaxwellChart(canvas) {
             energyChart = new Chart(canvas, {
                 type: 'bar',
@@ -1671,7 +2120,7 @@
             });
         }
 
-        // --- Khởi tạo biểu đồ nhiệt độ theo thời gian ---
+        // Khởi tạo biểu đồ nhiệt độ theo thời gian
         function initTemperatureChart(canvas) {
             energyChart = new Chart(canvas, {
                 type: 'line',
@@ -1699,19 +2148,19 @@
             });
         }
 
-        // --- Vòng lặp chính của animation, được gọi liên tục ---
+        // Vòng lặp chính của animation, được gọi liên tục
         function animate() {
+            const nowMs = performance.now();
             if (!isPaused) {
-                let updateCount = Math.max(1, Math.floor(speed));
-                for (let i = 0; i < updateCount; i++) {
-                    if (experiment === 'pendulum') updatePendulum();
-                    else if (experiment === 'spring') updateSpring();
-                    else if (experiment === 'projectile') updateProjectile();
-                    else if (experiment === 'ideal_gas') updateIdealGas();
-                    else if (experiment === 'thermo') updateThermo();
-                    else if (experiment === 'spring_horizontal') updateSpringHorizontal();
-                    else if (experiment === 'inclined_plane') updateInclinedPlane();
-                }
+                const simDt = timeStep * speed;
+                if (experiment === 'pendulum') updatePendulum(simDt);
+                else if (experiment === 'spring') updateSpring(simDt);
+                else if (experiment === 'projectile') updateProjectile(simDt);
+                else if (experiment === 'ideal_gas') updateIdealGas(simDt);
+                else if (experiment === 'thermo') updateThermo();
+                else if (experiment === 'spring_horizontal') updateSpringHorizontal(simDt);
+                else if (experiment === 'inclined_plane') updateInclinedPlane(simDt);
+                maybeAutoRecord(nowMs);
             }
             if (experiment === 'pendulum') drawPendulum();
             else if (experiment === 'spring') drawSpring();
@@ -1721,14 +2170,15 @@
             else if (experiment === 'spring_horizontal') drawSpringHorizontal();
             else if (experiment === 'inclined_plane') drawInclinedPlane();
             showInfo();
+            renderTaskChecklist();
             if (!isPaused) {
-                checkAndPause(); // Kiểm tra điều kiện dừng mô phỏng (ví dụ: dao động tắt hẳn)
+                checkAndPause(); // Kiểm tra điều kiện dừng và tự động tạm dừng nếu cần
                 updateChartData();
             }
             requestAnimationFrame(animate);
         }
 
-        // --- Kiểm tra xem mô phỏng có nên tự động tạm dừng không ---
+        // Kiểm tra điều kiện dừng của thí nghiệm và tự động tạm dừng nếu thí nghiệm đã kết thúc 
         function checkAndPause() {
             if (isPaused) return;
 
@@ -1748,16 +2198,22 @@
             if (stopped) togglePause();
         }
 
-        // --- Khởi chạy ---
-        loadState(); // Thay vì chạy mặc định, hãy tải trạng thái đã lưu
+        // Khởi chạy
+        loadState(); // Tải trạng thái đã lưu 
         animate();
-        // Thêm event listener để cập nhật màu nền thanh trượt và lưu trạng thái khi người dùng tương tác
-        document.getElementById('params').addEventListener('input', function(e) {
-            if (e.target.type === 'range') {
-                updateSliderFill(e.target);
-                saveState(); // Lưu trạng thái mỗi khi slider thay đổi
-            }
+        renderRecordTable();
+        renderTaskChecklist();
+
+        // Theo dõi thay đổi thông số
+        document.getElementById('params').addEventListener('change', function(e) {
+            if (!e.target || !e.target.id) return;
+            if (e.target.type === 'range') updateSliderFill(e.target);
+            getExperimentStats().paramChanges++;
+            renderTaskChecklist();
+            saveState();
         });
+        document.getElementById('autoRecordSec').addEventListener('change', updateAutoRecordSettings);
+        document.getElementById('autoRecordEnabled').addEventListener('change', updateAutoRecordSettings);
 
         // Sidebar toggle for mobile
         const sidebar = document.getElementById('sidebar');
@@ -1775,4 +2231,4 @@
     </script>
 </body>
 </html>
-Một số tính năng còn chưa hoàn thiện! Chúng tôi sẽ tiếp tục cập nhật trong thời gian tới.
+
